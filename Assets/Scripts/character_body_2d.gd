@@ -4,6 +4,7 @@ extends CharacterBody2D
 
 const SPEED = 60.0
 
+signal is_walking
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -20,6 +21,7 @@ func _physics_process(delta: float) -> void:
 	if input_direction != Vector2.ZERO:
 		velocity= input_direction * SPEED
 		animated_sprite_2d.play("walk")
+		is_walking.emit(true)
 		if input_direction.x != 0:
 			animated_sprite_2d.flip_h = input_direction.x > 0
 		animated_sprite_2d.play("walk")
@@ -27,5 +29,6 @@ func _physics_process(delta: float) -> void:
 		velocity.x = 0
 		velocity.y = 0
 		animated_sprite_2d.stop()
-	print("Input: ", input_direction, " | Velocity: ", velocity)
+		is_walking.emit(false)
+	
 	move_and_slide()

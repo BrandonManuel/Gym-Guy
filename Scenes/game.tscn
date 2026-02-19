@@ -2,7 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://badn5wnlv7821" path="res://Assets/Sprites/Gym Guy.png" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://kc0jb2mmjaf0" path="res://Assets/Scripts/character_body_2d.gd" id="2_qxrlw"]
-[ext_resource type="Texture2D" uid="uid://510vic4v6aw4" path="res://Assets/Sprites/Floor Mat.png" id="3_wrm1d"]
+[ext_resource type="Texture2D" uid="uid://c6snccgsi7qkl" path="res://Assets/Sprites/Gym Tileset.png" id="3_wrm1d"]
+[ext_resource type="Script" uid="uid://iw7r5t1tahrn" path="res://Assets/Scripts/player_reflection.gd" id="5_wowpa"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qxrlw"]
 atlas = ExtResource("1_ebmjs")
@@ -43,12 +44,55 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_ebmjs"]
 radius = 5.0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3dryh"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wowpa"]
 texture = ExtResource("3_wrm1d")
 0:0/0 = 0
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="TileSet" id="TileSet_wowpa"]
-sources/0 = SubResource("TileSetAtlasSource_3dryh")
+physics_layer_0/collision_layer = 1
+sources/1 = SubResource("TileSetAtlasSource_wowpa")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i6g32"]
+atlas = ExtResource("1_ebmjs")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1l0tm"]
+atlas = ExtResource("1_ebmjs")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v158k"]
+atlas = ExtResource("1_ebmjs")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h4fw4"]
+atlas = ExtResource("1_ebmjs")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3dryh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i6g32")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1l0tm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v158k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h4fw4")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}]
 
 [node name="Game" type="Node2D" unique_id=1839155308]
 
@@ -58,6 +102,7 @@ motion_mode = 1
 script = ExtResource("2_qxrlw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player" unique_id=249486481]
+z_index = 1
 sprite_frames = SubResource("SpriteFrames_i6g32")
 animation = &"walk"
 
@@ -67,7 +112,17 @@ shape = SubResource("CircleShape2D_ebmjs")
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=136709791]
 zoom = Vector2(10, 10)
+position_smoothing_enabled = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1943685767]
-tile_map_data = PackedByteArray("AAD/////AAAAAAAAAAAAAP//AAAAAAAAAAAAAAAAAAAAAAAAAAD//wAAAAAAAAAAAAD9//3/AAAAAAAAAAD+//3/AAAAAAAAAAD+//7/AAAAAAAAAAD///7/AAAAAAAAAAD///3/AAAAAAAAAAAAAP3/AAAAAAAAAAABAP3/AAAAAAAAAAABAPz/AAAAAAAAAAACAPz/AAAAAAAAAAACAP3/AAAAAAAAAAD9//z/AAAAAAAAAAD9//7/AAAAAAAAAAD9////AAAAAAAAAAD9/wAAAAAAAAAAAAD9/wEAAAAAAAAAAAD9/wIAAAAAAAAAAAD9/wMAAAAAAAAAAAD+//z/AAAAAAAAAAD+////AAAAAAAAAAD+/wAAAAAAAAAAAAD+/wEAAAAAAAAAAAD+/wIAAAAAAAAAAAD+/wMAAAAAAAAAAAD///z/AAAAAAAAAAD//wEAAAAAAAAAAAD//wIAAAAAAAAAAAD//wMAAAAAAAAAAAAAAPz/AAAAAAAAAAAAAP7/AAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAABAP7/AAAAAAAAAAABAP//AAAAAAAAAAABAAAAAAAAAAAAAAABAAEAAAAAAAAAAAABAAIAAAAAAAAAAAABAAMAAAAAAAAAAAACAP7/AAAAAAAAAAACAP//AAAAAAAAAAACAAAAAAAAAAAAAAACAAEAAAAAAAAAAAACAAIAAAAAAAAAAAACAAMAAAAAAAAAAAADAPz/AAAAAAAAAAADAP3/AAAAAAAAAAADAP7/AAAAAAAAAAADAP//AAAAAAAAAAADAAAAAAAAAAAAAAADAAEAAAAAAAAAAAADAAIAAAAAAAAAAAADAAMAAAAAAAAAAAD7//z/AAAAAAAAAAD7//3/AAAAAAAAAAD7//7/AAAAAAAAAAD7////AAAAAAAAAAD7/wAAAAAAAAAAAAD7/wEAAAAAAAAAAAD7/wIAAAAAAAAAAAD8//z/AAAAAAAAAAD8//3/AAAAAAAAAAD8//7/AAAAAAAAAAD8////AAAAAAAAAAD8/wAAAAAAAAAAAAD8/wEAAAAAAAAAAAD8/wIAAAAAAAAAAAD7/wMAAAAAAAAAAAD8/wMAAAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAD/////AQAAAAAAAAAAAP//AQAAAAAAAAAAAAAAAQAAAAAAAAD//wAAAQAAAAAAAAD9//3/AQAAAAAAAAD+//3/AQAAAAAAAAD+//7/AQAAAAAAAAD///7/AQAAAAAAAAD///3/AQAAAAAAAAAAAP3/AQAAAAAAAAABAP3/AQAAAAAAAAABAPz/AQAAAAAAAAACAPz/AQAAAAAAAAACAP3/AQAAAAAAAAD9//z/AQAAAAAAAAD9//7/AQAAAAAAAAD9////AQAAAAAAAAD9/wAAAQAAAAAAAAD9/wEAAQAAAAAAAAD9/wIAAQAAAAAAAAD9/wMAAQAAAAAAAAD+//z/AQAAAAAAAAD+////AQAAAAAAAAD+/wAAAQAAAAAAAAD+/wEAAQAAAAAAAAD+/wIAAQAAAAAAAAD+/wMAAQAAAAAAAAD///z/AQAAAAAAAAD//wEAAQAAAAAAAAD//wIAAQAAAAAAAAD//wMAAQAAAAAAAAAAAPz/AQAAAAAAAAAAAP7/AQAAAAAAAAAAAAEAAQAAAAAAAAAAAAIAAQAAAAAAAAAAAAMAAQAAAAAAAAABAP7/AQAAAAAAAAABAP//AQAAAAAAAAABAAAAAQAAAAAAAAABAAEAAQAAAAAAAAABAAIAAQAAAAAAAAABAAMAAQAAAAAAAAACAP7/AQAAAAAAAAACAP//AQAAAAAAAAACAAAAAQAAAAAAAAACAAEAAQAAAAAAAAACAAIAAQAAAAAAAAACAAMAAQAAAAAAAAADAPz/AQAAAAAAAAADAP3/AQAAAAAAAAADAP7/AQAAAAAAAAADAP//AQAAAAAAAAADAAAAAQAAAAAAAAADAAEAAQAAAAAAAAADAAIAAQAAAAAAAAADAAMAAQAAAAAAAAD7//z/AQAAAAAAAAD7//3/AQAAAAAAAAD7//7/AQAAAAAAAAD7////AQAAAAAAAAD7/wAAAQAAAAAAAAD7/wEAAQAAAAAAAAD7/wIAAQAAAAAAAAD8//z/AQAAAAAAAAD8//3/AQAAAAAAAAD8//7/AQAAAAAAAAD8////AQAAAAAAAAD8/wAAAQAAAAAAAAD8/wEAAQAAAAAAAAD8/wIAAQAAAAAAAAD7/wMAAQAAAAAAAAD8/wMAAQAAAAAAAAD7//v/AQABAAAAAAD8//v/AQABAAAAAAD9//v/AQABAAAAAAD+//v/AQABAAAAAAD///v/AQABAAAAAAAAAPv/AQABAAAAAAABAPv/AQABAAAAAAACAPv/AQABAAAAAAADAPv/AQABAAAAAAD7//r/AQABAAAAAAD8//r/AQABAAAAAAD9//r/AQABAAAAAAD+//r/AQABAAAAAAD///r/AQABAAAAAAAAAPr/AQABAAAAAAABAPr/AQABAAAAAAACAPr/AQABAAAAAAADAPr/AQABAAAAAAD7//n/AQABAAAAAAD8//n/AQABAAAAAAD9//n/AQABAAAAAAD+//n/AQABAAAAAAD///n/AQABAAAAAAAAAPn/AQABAAAAAAABAPn/AQABAAAAAAACAPn/AQABAAAAAAADAPn/AQABAAAAAAADAPj/AQABAAAAAAACAPj/AQABAAAAAAABAPj/AQABAAAAAAAAAPj/AQABAAAAAAD///j/AQABAAAAAAD+//j/AQABAAAAAAD9//j/AQABAAAAAAD8//j/AQABAAAAAAD7//j/AQABAAAAAAD7//f/AQABAAAAAAD8//f/AQABAAAAAAD9//f/AQABAAAAAAD+//f/AQABAAAAAAD///f/AQABAAAAAAAAAPf/AQABAAAAAAABAPf/AQABAAAAAAACAPf/AQABAAAAAAADAPf/AQABAAAAAAA=")
 tile_set = SubResource("TileSet_wowpa")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="TileMapLayer" unique_id=19074176]
+modulate = Color(1, 1, 1, 0.4745098)
+position = Vector2(0, -72)
+sprite_frames = SubResource("SpriteFrames_3dryh")
+animation = &"walk"
+script = ExtResource("5_wowpa")
+
+[connection signal="is_walking" from="Player" to="TileMapLayer/AnimatedSprite2D" method="_on_player_is_walking"]
