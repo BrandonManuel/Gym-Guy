@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://c3b7wo5dmsyfe"]
+
+[ext_resource type="Texture2D" uid="uid://badn5wnlv7821" path="res://Assets/Sprites/Gym Guy.png" id="1_ebmjs"]
+[ext_resource type="Script" uid="uid://kc0jb2mmjaf0" path="res://Assets/Scripts/character_body_2d.gd" id="2_qxrlw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qxrlw"]
+atlas = ExtResource("1_ebmjs")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wrm1d"]
+atlas = ExtResource("1_ebmjs")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3dryh"]
+atlas = ExtResource("1_ebmjs")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wowpa"]
+atlas = ExtResource("1_ebmjs")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i6g32"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qxrlw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wrm1d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3dryh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wowpa")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ebmjs"]
+radius = 5.0
+
+[node name="Game" type="Node2D" unique_id=1839155308]
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=70028894]
+motion_mode = 1
+script = ExtResource("2_qxrlw")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player" unique_id=249486481]
+scale = Vector2(10.624998, 10.624998)
+sprite_frames = SubResource("SpriteFrames_i6g32")
+animation = &"walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1609511969]
+position = Vector2(1, 1)
+shape = SubResource("CircleShape2D_ebmjs")
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=136709791]
