@@ -1,7 +1,8 @@
-[gd_scene format=3 uid="uid://c3b7wo5dmsyfe"]
+[gd_scene format=4 uid="uid://c3b7wo5dmsyfe"]
 
 [ext_resource type="Texture2D" uid="uid://badn5wnlv7821" path="res://Assets/Sprites/Gym Guy.png" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://kc0jb2mmjaf0" path="res://Assets/Scripts/character_body_2d.gd" id="2_qxrlw"]
+[ext_resource type="Texture2D" uid="uid://510vic4v6aw4" path="res://Assets/Sprites/Floor Mat.png" id="3_wrm1d"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qxrlw"]
 atlas = ExtResource("1_ebmjs")
@@ -42,14 +43,21 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_ebmjs"]
 radius = 5.0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3dryh"]
+texture = ExtResource("3_wrm1d")
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_wowpa"]
+sources/0 = SubResource("TileSetAtlasSource_3dryh")
+
 [node name="Game" type="Node2D" unique_id=1839155308]
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=70028894]
+z_index = 1
 motion_mode = 1
 script = ExtResource("2_qxrlw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player" unique_id=249486481]
-scale = Vector2(10.624998, 10.624998)
 sprite_frames = SubResource("SpriteFrames_i6g32")
 animation = &"walk"
 
@@ -58,3 +66,8 @@ position = Vector2(1, 1)
 shape = SubResource("CircleShape2D_ebmjs")
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=136709791]
+zoom = Vector2(10, 10)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1943685767]
+tile_map_data = PackedByteArray("AAD/////AAAAAAAAAAAAAP//AAAAAAAAAAAAAAAAAAAAAAAAAAD//wAAAAAAAAAAAAD9//3/AAAAAAAAAAD+//3/AAAAAAAAAAD+//7/AAAAAAAAAAD///7/AAAAAAAAAAD///3/AAAAAAAAAAAAAP3/AAAAAAAAAAABAP3/AAAAAAAAAAABAPz/AAAAAAAAAAACAPz/AAAAAAAAAAACAP3/AAAAAAAAAAD9//z/AAAAAAAAAAD9//7/AAAAAAAAAAD9////AAAAAAAAAAD9/wAAAAAAAAAAAAD9/wEAAAAAAAAAAAD9/wIAAAAAAAAAAAD9/wMAAAAAAAAAAAD+//z/AAAAAAAAAAD+////AAAAAAAAAAD+/wAAAAAAAAAAAAD+/wEAAAAAAAAAAAD+/wIAAAAAAAAAAAD+/wMAAAAAAAAAAAD///z/AAAAAAAAAAD//wEAAAAAAAAAAAD//wIAAAAAAAAAAAD//wMAAAAAAAAAAAAAAPz/AAAAAAAAAAAAAP7/AAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAABAP7/AAAAAAAAAAABAP//AAAAAAAAAAABAAAAAAAAAAAAAAABAAEAAAAAAAAAAAABAAIAAAAAAAAAAAABAAMAAAAAAAAAAAACAP7/AAAAAAAAAAACAP//AAAAAAAAAAACAAAAAAAAAAAAAAACAAEAAAAAAAAAAAACAAIAAAAAAAAAAAACAAMAAAAAAAAAAAADAPz/AAAAAAAAAAADAP3/AAAAAAAAAAADAP7/AAAAAAAAAAADAP//AAAAAAAAAAADAAAAAAAAAAAAAAADAAEAAAAAAAAAAAADAAIAAAAAAAAAAAADAAMAAAAAAAAAAAD7//z/AAAAAAAAAAD7//3/AAAAAAAAAAD7//7/AAAAAAAAAAD7////AAAAAAAAAAD7/wAAAAAAAAAAAAD7/wEAAAAAAAAAAAD7/wIAAAAAAAAAAAD8//z/AAAAAAAAAAD8//3/AAAAAAAAAAD8//7/AAAAAAAAAAD8////AAAAAAAAAAD8/wAAAAAAAAAAAAD8/wEAAAAAAAAAAAD8/wIAAAAAAAAAAAD7/wMAAAAAAAAAAAD8/wMAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_wowpa")
