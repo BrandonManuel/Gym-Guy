@@ -1,6 +1,6 @@
 extends AnimatedSprite2D
 
-@onready var tile_map_layer: TileMapLayer = $".."
+@onready var tile_map_layer: TileMapLayer = $"../Reflection"
 @onready var player: CharacterBody2D = $"../../Player"
 
 # Called when the node enters the scene tree for the first time.

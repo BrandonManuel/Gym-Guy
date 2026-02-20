@@ -19,12 +19,13 @@ func _physics_process(delta: float) -> void:
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_direction := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	if input_direction != Vector2.ZERO:
-		velocity= input_direction * SPEED
-		animated_sprite_2d.play("walk")
+		velocity = input_direction * SPEED
+		if not animated_sprite_2d.is_playing():
+			animated_sprite_2d.play("walk")
+			
 		is_walking.emit(true)
 		if input_direction.x != 0:
 			animated_sprite_2d.flip_h = input_direction.x > 0
-		animated_sprite_2d.play("walk")
 	else:
 		velocity.x = 0
 		velocity.y = 0
