@@ -24,4 +24,4 @@ func _on_player_is_walking(is_walking) -> void:
 	if is_walking:
 		play('walk')
 	else:
-		stop()
+		play('idle')

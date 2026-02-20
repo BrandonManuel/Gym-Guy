@@ -5,19 +5,35 @@
 [ext_resource type="Texture2D" uid="uid://c6snccgsi7qkl" path="res://Assets/Sprites/Gym Tileset.png" id="3_wrm1d"]
 [ext_resource type="Script" uid="uid://iw7r5t1tahrn" path="res://Assets/Scripts/player_reflection.gd" id="5_wowpa"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qxrlw"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_3dryh"]
+atlas = ExtResource("1_ebmjs")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wowpa"]
+atlas = ExtResource("1_ebmjs")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ldgsr"]
+atlas = ExtResource("1_ebmjs")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o5yvi"]
+atlas = ExtResource("1_ebmjs")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rku1e"]
 atlas = ExtResource("1_ebmjs")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wrm1d"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_rfjv2"]
 atlas = ExtResource("1_ebmjs")
 region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3dryh"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_1phco"]
 atlas = ExtResource("1_ebmjs")
 region = Rect2(32, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wowpa"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_nb51f"]
 atlas = ExtResource("1_ebmjs")
 region = Rect2(48, 0, 16, 16)
 
@@ -25,16 +41,33 @@ region = Rect2(48, 0, 16, 16)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_qxrlw")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wrm1d")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_3dryh")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": SubResource("AtlasTexture_wowpa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ldgsr")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_o5yvi")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rku1e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rfjv2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1phco")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nb51f")
 }],
 "loop": true,
 "name": &"walk",
@@ -71,6 +104,22 @@ texture = ExtResource("3_wrm1d")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_3dryh")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_nnt18"]
+atlas = ExtResource("1_ebmjs")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ewbju"]
+atlas = ExtResource("1_ebmjs")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_85qyi"]
+atlas = ExtResource("1_ebmjs")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iivbl"]
+atlas = ExtResource("1_ebmjs")
+region = Rect2(48, 16, 16, 16)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_i6g32"]
 atlas = ExtResource("1_ebmjs")
 region = Rect2(0, 0, 16, 16)
@@ -89,6 +138,23 @@ region = Rect2(48, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_3dryh"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nnt18")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_ewbju")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_85qyi")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_iivbl")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_i6g32")
@@ -119,6 +185,7 @@ z_index = 1
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_i6g32")
 animation = &"walk"
+frame_progress = 0.48408717
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1609511969]
 position = Vector2(1, 1)

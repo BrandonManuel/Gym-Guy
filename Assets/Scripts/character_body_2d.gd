@@ -20,8 +20,7 @@ func _physics_process(delta: float) -> void:
 	var input_direction := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	if input_direction != Vector2.ZERO:
 		velocity = input_direction * SPEED
-		if not animated_sprite_2d.is_playing():
-			animated_sprite_2d.play("walk")
+		animated_sprite_2d.play("walk")
 			
 		is_walking.emit(true)
 		if input_direction.x != 0:
@@ -29,7 +28,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = 0
 		velocity.y = 0
-		animated_sprite_2d.stop()
 		is_walking.emit(false)
+		animated_sprite_2d.play("idle")
 	
 	move_and_slide()
