@@ -3,6 +3,8 @@ extends AnimatedSprite2D
 @onready var tile_map_layer: TileMapLayer = $"../Reflection"
 @onready var player: CharacterBody2D = $"../../Player"
 
+var current_animation
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -20,8 +22,7 @@ func _process(delta: float) -> void:
 	
 	flip_h = player.get_node("AnimatedSprite2D").flip_h
 
-func _on_player_is_walking(is_walking) -> void:
-	if is_walking:
-		play('walk')
-	else:
-		play('idle')
+func _on_player_is_walking(walking_animation) -> void:
+	if current_animation != walking_animation:
+		play(walking_animation)
+		current_animation = walking_animation
