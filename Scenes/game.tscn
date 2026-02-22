@@ -4,6 +4,8 @@
 [ext_resource type="Script" uid="uid://dhb6opttyk0gs" path="res://Assets/Scripts/mirror_world.gd" id="1_wowpa"]
 [ext_resource type="Script" uid="uid://kc0jb2mmjaf0" path="res://Assets/Scripts/character_body_2d.gd" id="2_qxrlw"]
 [ext_resource type="Texture2D" uid="uid://c6snccgsi7qkl" path="res://Assets/Sprites/Gym Tileset.png" id="3_wrm1d"]
+[ext_resource type="Script" uid="uid://b8rdnnuv8uptk" path="res://Assets/Scripts/dumbbell.gd" id="5_i6g32"]
+[ext_resource type="Texture2D" uid="uid://d2quvq60asi4d" path="res://Assets/Sprites/Dumbbell.png" id="5_wowpa"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rku1e"]
 atlas = ExtResource("1_ebmjs")
@@ -143,6 +145,10 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_ebmjs"]
 radius = 5.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wowpa"]
+radius = 4.5
+height = 11.0
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wowpa"]
 texture = ExtResource("3_wrm1d")
 0:0/0 = 0
@@ -164,7 +170,6 @@ sources/1 = SubResource("TileSetAtlasSource_wowpa")
 
 [node name="Mirror World" type="CanvasGroup" parent="." unique_id=692632318]
 modulate = Color(1, 1, 1, 0.7058824)
-position = Vector2(0, 3)
 script = ExtResource("1_wowpa")
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=70028894 groups=["reflections"]]
@@ -184,9 +189,23 @@ position = Vector2(1, 1)
 shape = SubResource("CircleShape2D_ebmjs")
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=136709791]
-zoom = Vector2(10, 10)
+zoom = Vector2(5, 5)
 process_callback = 0
 position_smoothing_enabled = true
+
+[node name="Dumbbell" type="Sprite2D" parent="." unique_id=76205328 groups=["reflections"]]
+z_index = 1
+position = Vector2(-23, -49)
+texture = ExtResource("5_wowpa")
+script = ExtResource("5_i6g32")
+
+[node name="Area2D" type="Area2D" parent="Dumbbell" unique_id=857269994]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dumbbell/Area2D" unique_id=1560822424]
+position = Vector2(-0.5, -0.5)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_wowpa")
 
 [node name="Gym Floor" type="TileMapLayer" parent="." unique_id=1943685767 groups=["reflections"]]
 tile_map_data = PackedByteArray("AAD/////AQAAAAAAAAAAAP//AQAAAAAAAAAAAAAAAQAAAAAAAAD//wAAAQAAAAAAAAD9//3/AQAAAAAAAAD+//3/AQAAAAAAAAD+//7/AQAAAAAAAAD///7/AQAAAAAAAAD///3/AQAAAAAAAAAAAP3/AQAAAAAAAAABAP3/AQAAAAAAAAABAPz/AQAAAAAAAAACAPz/AQAAAAAAAAACAP3/AQAAAAAAAAD9//z/AQAAAAAAAAD9//7/AQAAAAAAAAD9////AQAAAAAAAAD9/wAAAQAAAAAAAAD9/wEAAQAAAAAAAAD9/wIAAQAAAAAAAAD9/wMAAQAAAAAAAAD+//z/AQAAAAAAAAD+////AQAAAAAAAAD+/wAAAQAAAAAAAAD+/wEAAQAAAAAAAAD+/wIAAQAAAAAAAAD+/wMAAQAAAAAAAAD///z/AQAAAAAAAAD//wEAAQAAAAAAAAD//wIAAQAAAAAAAAD//wMAAQAAAAAAAAAAAPz/AQAAAAAAAAAAAP7/AQAAAAAAAAAAAAEAAQAAAAAAAAAAAAIAAQAAAAAAAAAAAAMAAQAAAAAAAAABAP7/AQAAAAAAAAABAP//AQAAAAAAAAABAAAAAQAAAAAAAAABAAEAAQAAAAAAAAABAAIAAQAAAAAAAAABAAMAAQAAAAAAAAACAP7/AQAAAAAAAAACAP//AQAAAAAAAAACAAAAAQAAAAAAAAACAAEAAQAAAAAAAAACAAIAAQAAAAAAAAACAAMAAQAAAAAAAAADAPz/AQAAAAAAAAADAP3/AQAAAAAAAAADAP7/AQAAAAAAAAADAP//AQAAAAAAAAADAAAAAQAAAAAAAAADAAEAAQAAAAAAAAADAAIAAQAAAAAAAAADAAMAAQAAAAAAAAD7//z/AQAAAAAAAAD7//3/AQAAAAAAAAD7//7/AQAAAAAAAAD7////AQAAAAAAAAD7/wAAAQAAAAAAAAD7/wEAAQAAAAAAAAD7/wIAAQAAAAAAAAD8//z/AQAAAAAAAAD8//3/AQAAAAAAAAD8//7/AQAAAAAAAAD8////AQAAAAAAAAD8/wAAAQAAAAAAAAD8/wEAAQAAAAAAAAD8/wIAAQAAAAAAAAD7/wMAAQAAAAAAAAD8/wMAAQAAAAAAAAA=")
@@ -194,6 +213,7 @@ tile_set = SubResource("TileSet_wowpa")
 collision_enabled = false
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Gym Floor" unique_id=323454216]
+position = Vector2(0, 2)
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gym Floor/StaticBody2D" unique_id=200235526]
@@ -202,3 +222,4 @@ rotation = -3.1415925
 shape = SubResource("WorldBoundaryShape2D_3dryh")
 
 [connection signal="is_walking" from="Player" to="Mirror World" method="_on_player_is_walking"]
+[connection signal="body_entered" from="Dumbbell/Area2D" to="Dumbbell" method="_on_area_2d_body_entered"]
