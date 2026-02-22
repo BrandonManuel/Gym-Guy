@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://b3tmi1t30ey7j"]
+
+[ext_resource type="Texture2D" uid="uid://d2quvq60asi4d" path="res://Assets/Sprites/Dumbbell.png" id="1_12uam"]
+[ext_resource type="Script" uid="uid://b8rdnnuv8uptk" path="res://Assets/Scripts/dumbbell.gd" id="2_likwp"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wowpa"]
+radius = 4.5
+height = 11.0
+
+[node name="Dumbbell" type="Sprite2D" unique_id=1458259705 groups=["reflections"]]
+z_index = 1
+texture = ExtResource("1_12uam")
+script = ExtResource("2_likwp")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=715164330]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=646085101]
+position = Vector2(-0.5, -0.5)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_wowpa")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
