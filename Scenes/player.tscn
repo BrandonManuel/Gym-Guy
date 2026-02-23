@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://kc0jb2mmjaf0" path="res://Assets/Scripts/character_body_2d.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://badn5wnlv7821" path="res://Assets/Sprites/Gym Guy.png" id="2_6t5aa"]
+[ext_resource type="Script" uid="uid://u2w74mi1qo2n" path="res://Assets/Scripts/inventory.gd" id="3_6t5aa"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rku1e"]
 atlas = ExtResource("2_6t5aa")
@@ -141,24 +142,36 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_ebmjs"]
 radius = 5.0
 
-[node name="Player" type="CharacterBody2D" unique_id=1414155534 groups=["reflections"]]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wowpa"]
+size = Vector2(14, 7)
+
+[node name="Player" type="CharacterBody2D" unique_id=1283554829 groups=["reflections"]]
 z_index = 1
 collision_mask = 3
 motion_mode = 1
 script = ExtResource("1_cvnsp")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1676523736]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1450433335]
 z_index = 1
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_i6g32")
 animation = &"walk"
-frame = 3
-frame_progress = 0.31508425
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=185876389]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1938412204]
+position = Vector2(1, 1)
 shape = SubResource("CircleShape2D_ebmjs")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1060401253]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1297284636]
 zoom = Vector2(5, 5)
 process_callback = 0
 position_smoothing_enabled = true
+
+[node name="Player Shadow" type="Area2D" parent="." unique_id=1439446641]
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player Shadow" unique_id=366799493]
+position = Vector2(0, 6.5)
+shape = SubResource("RectangleShape2D_wowpa")
+
+[node name="Inventory" type="Node" parent="." unique_id=565692985]
+script = ExtResource("3_6t5aa")

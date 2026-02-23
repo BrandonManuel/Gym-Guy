@@ -1,12 +1,23 @@
 extends CharacterBody2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var inventory: Node = $Inventory
 
 const SPEED = 60.0
 enum facing { UP, DOWN }
 
 signal is_walking
+signal picked_up_item
 
 var direction = facing.DOWN
+
+var nearby_item: Node2D = null
+
+func _process(delta: float) -> void:
+	if nearby_item != null and Input.is_action_just_pressed("interact"):
+		inventory.add_nearby_item(nearby_item)
+		picked_up_item.emit(nearby_item)
+		nearby_item.queue_free()
+		nearby_item = null
 
 
 func _physics_process(delta: float) -> void:
