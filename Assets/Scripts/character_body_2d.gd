@@ -1,6 +1,8 @@
 extends CharacterBody2D
-@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+
+@onready var animation_player: AnimationPlayer = $Visual/AnimationPlayer
 @onready var inventory: Node = $Inventory
+@onready var sprite: Sprite2D = $Visual/Sprite2D
 
 const SPEED = 60.0
 enum facing { UP, DOWN }
@@ -49,7 +51,7 @@ func _physics_process(delta: float) -> void:
 				animation = "walk"
 			
 		if input_direction.x != 0:
-			animated_sprite_2d.flip_h = input_direction.x > 0
+			sprite.flip_h = input_direction.x > 0
 	else:
 		velocity.x = 0
 		velocity.y = 0
@@ -59,6 +61,6 @@ func _physics_process(delta: float) -> void:
 		else:
 			animation = "idle"
 	
-	animated_sprite_2d.play(animation)
+	animation_player.play(animation)
 	is_walking.emit(animation)
 	move_and_slide()
