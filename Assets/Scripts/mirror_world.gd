@@ -30,6 +30,23 @@ func _process(delta: float) -> void:
 		update_reflection_pos(player_sprite, player_reflection)
 		player_reflection.flip_h = player_sprite.flip_h
 		
+		var reflection_hand = player_reflection.get_node("Hand")
+		if reflection_hand and reflection_hand.get_child_count() > 0:
+			var frame = player_sprite.frame % 4
+			var anim = player_animation_player.current_animation
+			var offsets = Util.HAND_OFFSETS.get(anim, [Util.HAND_POS])
+			var rotations = Util.HAND_ROTATIONS.get(anim, [0])
+			var pos = offsets[min(frame, offsets.size() - 1)]
+			var held = reflection_hand.get_child(0)
+			if player_reflection.flip_h:
+				reflection_hand.position.x = pos.x
+			else:
+				reflection_hand.position.x = -pos.x + 1
+			reflection_hand.position.y = pos.y
+			
+			var rotation = rotations[min(frame, offsets.size() - 1)]
+			reflection_hand.rotation_degrees = rotation
+		
 func reflect(object: Node):
 	if object.name != 'Player' and 'reflections' in object.get_groups():
 		if object is Node2D:
@@ -63,8 +80,9 @@ func update_reflection_pos(source: Node2D, reflection: Node2D):
 	reflection.global_position.y = mirror_world_pos.y - dist
 
 	# closer to mirror = higher dist = should render on top in reflection
-	reflection.z_index = int(dist)
-	reflection.z_as_relative = false
+	if reflection != reflections.get(player):
+		reflection.z_index = int(dist)
+		reflection.z_as_relative = false
 
 func _on_player_is_walking(walking_animation) -> void:
 	if player_animation_player == null:
@@ -81,6 +99,16 @@ func _on_player_is_walking(walking_animation) -> void:
 
 
 func _on_player_picked_up_item(item: Node) -> void:
-	if reflections[item] != null:
-		remove_child(reflections[item])
+	var item_reflection = reflections.get(item)
+	if item_reflection != null:
+		item_reflection.get_parent().remove_child(item_reflection)
 		reflections.erase(item)
+		
+		var reflection_hand = player_reflection.get_node("Hand")
+		reflection_hand.add_child(item_reflection)
+		item_reflection.transform = Transform2D.IDENTITY
+		
+func _on_player_held_item_z_changed(z: int) -> void:
+	var reflection_hand = player_reflection.get_node("Hand")
+	if reflection_hand and reflection_hand.get_child_count() > 0:
+		reflection_hand.get_child(0).z_index = -z

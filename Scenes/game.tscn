@@ -64,5 +64,6 @@ script = SubResource("GDScript_wowpa")
 [node name="Dumbbell" parent="Interactables" unique_id=1458259705 instance=ExtResource("4_wowpa")]
 position = Vector2(-23, -49)
 
+[connection signal="held_item_z_changed" from="Player" to="Mirror World" method="_on_player_held_item_z_changed"]
 [connection signal="is_walking" from="Player" to="Mirror World" method="_on_player_is_walking"]
 [connection signal="picked_up_item" from="Player" to="Mirror World" method="_on_player_picked_up_item"]

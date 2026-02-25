@@ -3,23 +3,31 @@ extends CharacterBody2D
 @onready var animation_player: AnimationPlayer = $Visual/AnimationPlayer
 @onready var inventory: Node = $Inventory
 @onready var sprite: Sprite2D = $Visual/Sprite2D
+@onready var hand: Marker2D = $Visual/Sprite2D/Hand
 
 const SPEED = 60.0
+
 enum facing { UP, DOWN }
 
 signal is_walking
 signal picked_up_item
+signal held_item_z_changed(z: int)
 
 var direction = facing.DOWN
 
 var nearby_item: Node2D = null
+var held_item: Node2D = null
 
 func _process(delta: float) -> void:
 	if nearby_item != null and Input.is_action_just_pressed("interact"):
 		inventory.add_nearby_item(nearby_item)
-		picked_up_item.emit(nearby_item)
-		nearby_item.queue_free()
+		var item = nearby_item
 		nearby_item = null
+		picked_up_item.emit(item)
+		item.get_parent().remove_child(item)
+		hand.add_child(item)
+		item.transform = Transform2D.IDENTITY
+		held_item = item
 
 
 func _physics_process(delta: float) -> void:
@@ -52,6 +60,7 @@ func _physics_process(delta: float) -> void:
 			
 		if input_direction.x != 0:
 			sprite.flip_h = input_direction.x > 0
+
 	else:
 		velocity.x = 0
 		velocity.y = 0
@@ -64,3 +73,32 @@ func _physics_process(delta: float) -> void:
 	animation_player.play(animation)
 	is_walking.emit(animation)
 	move_and_slide()
+
+	if held_item:
+		var frame = sprite.frame % 4
+		var offsets = Util.HAND_OFFSETS.get(animation, [Util.HAND_POS])
+		var rotations = Util.HAND_ROTATIONS.get(animation, [0])
+		if animation.contains('(back)'):
+			if animation.contains('walk') and frame == 3:
+				held_item.z_index = 1
+				held_item_z_changed.emit(1)
+			else:
+				held_item.z_index = -1
+				held_item_z_changed.emit(-1)
+			held_item.z_as_relative = true
+		else:
+			if animation == 'walk' and frame == 3:
+				held_item.z_index = -1
+				held_item_z_changed.emit(-1)
+			else:
+				held_item.z_index = 1
+				held_item_z_changed.emit(1)
+			held_item.z_as_relative = true
+		var pos = offsets[min(frame, offsets.size() - 1)]
+		var rotation = rotations[min(frame, offsets.size() - 1)]
+		if sprite.flip_h:
+			hand.position.x = -pos.x + 1
+		else:
+			hand.position.x = pos.x
+		hand.position.y = pos.y
+		hand.rotation_degrees = rotation

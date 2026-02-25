@@ -15,9 +15,17 @@ run/main_scene="uid://c3b7wo5dmsyfe"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Util="*uid://c2kugt1s6e1a4"
+
 [dotnet]
 
 project/assembly_name="Gym Guy"
+
+[editor]
+
+movie_writer/movie_file="C:/Users/brand/Godot/gym-guy/Recordings/recording.avi"
 
 [input]
 

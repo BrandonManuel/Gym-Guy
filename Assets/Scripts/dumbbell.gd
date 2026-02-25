@@ -1,7 +1,7 @@
 extends Sprite2D
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
-	if area.name == 'Player Shadow':
+	if area.name == 'Player Shadow' and area.get_parent().held_item != self:
 		enable_outline(true)
 		area.get_parent().nearby_item = self
 		
