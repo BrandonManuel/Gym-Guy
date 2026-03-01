@@ -33,19 +33,32 @@ func _process(delta: float) -> void:
 		var reflection_hand = player_reflection.get_node("Hand")
 		if reflection_hand and reflection_hand.get_child_count() > 0:
 			var frame = player_sprite.frame % 4
-			var anim = player_animation_player.current_animation
-			var offsets = Util.HAND_OFFSETS.get(anim, [Util.HAND_POS])
+						
+			var animation = player_animation_player.current_animation.split(' ')
+			
+			var anim = 'idle'
+			if animation.size() > 1:
+				if animation.has('(reflection)'):
+					anim = animation[0]
+				else:
+					anim = animation[0] + ' ' + animation[1]
+					
+			
+			var offsets = Util.HAND_OFFSETS_REFLECTIONS.get(anim, [Util.HAND_POS])
 			var rotations = Util.HAND_ROTATIONS.get(anim, [0])
 			var pos = offsets[min(frame, offsets.size() - 1)]
+			print(pos)
 			var held = reflection_hand.get_child(0)
 			if player_reflection.flip_h:
 				reflection_hand.position.x = pos.x
 			else:
-				reflection_hand.position.x = -pos.x + 1
+				reflection_hand.position.x = -pos.x +  1
 			reflection_hand.position.y = pos.y
 			
 			var rotation = rotations[min(frame, offsets.size() - 1)]
+
 			reflection_hand.rotation_degrees = rotation
+			
 		
 func reflect(object: Node):
 	if object.name != 'Player' and 'reflections' in object.get_groups():
@@ -84,17 +97,22 @@ func update_reflection_pos(source: Node2D, reflection: Node2D):
 		reflection.z_index = int(dist)
 		reflection.z_as_relative = false
 
-func _on_player_is_walking(walking_animation) -> void:
+func _on_player_is_walking(walking_animation: String) -> void:
 	if player_animation_player == null:
 		return
 	
-	if current_animation != walking_animation:
-		if walking_animation is String:
-			var animation = walking_animation.split(' ')
-			if animation.size() > 1:
+	if current_animation != walking_animation and walking_animation is String:
+		var animation = walking_animation.split(' ')
+		if animation.size() > 1:
+			if animation.has('idle'):
 				player_animation_player.play(animation[0])
 			else:
+				player_animation_player.play(animation[0] + ' (reflection)')
+		else:
+			if animation.has('idle'):
 				player_animation_player.play(animation[0] + ' (back)')
+			else:
+				player_animation_player.play(animation[0] + ' (back reflection)')
 		current_animation = walking_animation
 
 
@@ -112,3 +130,4 @@ func _on_player_held_item_z_changed(z: int) -> void:
 	var reflection_hand = player_reflection.get_node("Hand")
 	if reflection_hand and reflection_hand.get_child_count() > 0:
 		reflection_hand.get_child(0).z_index = -z
+		reflection_hand.get_child(0).z_as_relative = true

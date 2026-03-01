@@ -11,6 +11,7 @@ enum facing { UP, DOWN }
 
 signal is_walking
 signal picked_up_item
+signal dropped_item
 signal held_item_z_changed(z: int)
 
 var direction = facing.DOWN

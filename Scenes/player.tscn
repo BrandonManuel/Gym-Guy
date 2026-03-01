@@ -72,6 +72,22 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.4, 0.6)
 }
 
+[sub_resource type="Animation" id="Animation_f1ek2"]
+resource_name = "walk (back reflection)"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2, 2),
+"points": PackedFloat32Array(20, -0.25, 0, 0.25, 0, 21, -0.033333335, -0.16666667, 0, 0, 22, -0.033333335, -0.16666667, 0, 0, 23, -0.03333334, -0.16666667, 0, 0),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6)
+}
+
 [sub_resource type="Animation" id="Animation_6t5aa"]
 resource_name = "walk"
 length = 0.8
@@ -88,13 +104,31 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.4, 0.6)
 }
 
+[sub_resource type="Animation" id="Animation_8erm5"]
+resource_name = "walk (reflection)"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 2, 0, 2),
+"points": PackedFloat32Array(16, -0.25, 0, 0.25, 0, 17, -0.033333335, -0.16666667, 0, 0, 18, -0.033333335, -0.16666667, 0, 0, 19, -0.027777782, 0.16666667, 0, 0),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6)
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vgqql"]
 _data = {
 &"RESET": SubResource("Animation_vgqql"),
 &"idle": SubResource("Animation_fkybt"),
 &"idle (back)": SubResource("Animation_x3wgy"),
 &"walk": SubResource("Animation_3smsa"),
-&"walk (back)": SubResource("Animation_6t5aa")
+&"walk (back reflection)": SubResource("Animation_f1ek2"),
+&"walk (back)": SubResource("Animation_6t5aa"),
+&"walk (reflection)": SubResource("Animation_8erm5")
 }
 
 [node name="Player" type="CharacterBody2D" unique_id=1283554829 groups=["reflections"]]
@@ -129,7 +163,7 @@ z_index = 1
 texture_filter = 1
 texture = ExtResource("2_6t5aa")
 hframes = 4
-vframes = 4
+vframes = 6
 
 [node name="Hand" type="Marker2D" parent="Visual/Sprite2D" unique_id=980069678]
 position = Vector2(0, 4)
