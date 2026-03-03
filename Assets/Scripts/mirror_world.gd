@@ -30,34 +30,33 @@ func _process(delta: float) -> void:
 		update_reflection_pos(player_sprite, player_reflection)
 		player_reflection.flip_h = player_sprite.flip_h
 		
-		var reflection_hand = player_reflection.get_node("Hand")
+		var reflection_hand: Marker2D = player_reflection.get_node("Hand")
 		if reflection_hand and reflection_hand.get_child_count() > 0:
 			var frame = player_sprite.frame % 4
 						
-			var animation = player_animation_player.current_animation.split(' ')
-			
-			var anim = 'idle'
-			if animation.size() > 1:
-				if animation.has('(reflection)'):
-					anim = animation[0]
-				else:
-					anim = animation[0] + ' ' + animation[1]
-					
-			
+			var anim = player_animation_player.current_animation
 			var offsets = Util.HAND_OFFSETS_REFLECTIONS.get(anim, [Util.HAND_POS])
-			var rotations = Util.HAND_ROTATIONS.get(anim, [0])
+			var rotations = Util.HAND_ROTATIONS_REFLECTIONS.get(anim, [0])
 			var pos = offsets[min(frame, offsets.size() - 1)]
-			print(pos)
-			var held = reflection_hand.get_child(0)
+			
 			if player_reflection.flip_h:
 				reflection_hand.position.x = pos.x
 			else:
 				reflection_hand.position.x = -pos.x +  1
 			reflection_hand.position.y = pos.y
 			
+			if player_sprite.flip_h:
+				reflection_hand.position.x = -pos.x + 1
+			else:
+				reflection_hand.position.x = pos.x
+			reflection_hand.position.y = pos.y
 			var rotation = rotations[min(frame, offsets.size() - 1)]
 
 			reflection_hand.rotation_degrees = rotation
+			
+			var hand: Marker2D = player_sprite.get_node("Hand")
+			reflection_hand.z_index = hand.z_index * -1
+			reflection_hand.z_as_relative = true
 			
 		
 func reflect(object: Node):
