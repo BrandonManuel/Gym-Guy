@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://b8b6u354gk5fn"]
+
+[ext_resource type="Script" uid="uid://cxxd8dqlhjwyi" path="res://Assets/Scripts/menu.gd" id="1_1rerr"]
+[ext_resource type="Texture2D" uid="uid://cj8adop763j82" path="res://Assets/Sprites/Play.png" id="2_wwsa2"]
+[ext_resource type="Texture2D" uid="uid://cfibmteine06g" path="res://Assets/Sprites/Play (Pressed).png" id="3_jsrd8"]
+[ext_resource type="Texture2D" uid="uid://bl5veqi70gy4j" path="res://Assets/Sprites/Quit.png" id="4_wbdvm"]
+[ext_resource type="Texture2D" uid="uid://cl7olcne8whvc" path="res://Assets/Sprites/Quit (Pressed).png" id="5_q3rjx"]
+
+[sub_resource type="SystemFont" id="SystemFont_wwsa2"]
+font_names = PackedStringArray("Comic Sans MS")
+
+[node name="Menu" type="Control" unique_id=1534397602]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1rerr")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1431914866]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.07137618, 0.38091406, 0.5472506, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=681458777]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Title" type="Label" parent="VBoxContainer" unique_id=1672266738]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = SubResource("SystemFont_wwsa2")
+theme_override_font_sizes/font_size = 25
+text = "Guy who is in a gym"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Start Button" type="TextureButton" parent="VBoxContainer" unique_id=1791325488]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+texture_normal = ExtResource("2_wwsa2")
+texture_pressed = ExtResource("3_jsrd8")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/Start Button" unique_id=469575428]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Start"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Quit Button" type="TextureButton" parent="VBoxContainer" unique_id=1404614884]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 2
+texture_normal = ExtResource("4_wbdvm")
+texture_pressed = ExtResource("5_q3rjx")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/Quit Button" unique_id=2020819527]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -7.0
+offset_right = -1.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Exit"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="." unique_id=1978571566]
+oversampling_override = 1.0
+title = "Are you sure you want to exit?"
+initial_position = 1
+size = Vector2i(500, 100)
+ok_button_text = "Exit Game"
+
+[connection signal="pressed" from="VBoxContainer/Start Button" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Quit Button" to="." method="_on_quit_button_pressed"]
+[connection signal="confirmed" from="ConfirmationDialog" to="." method="_on_confirmation_dialog_confirmed"]
