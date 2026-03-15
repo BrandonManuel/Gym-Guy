@@ -109,6 +109,7 @@ ok_button_text = "Exit Game"
 
 [node name="Title Music" type="AudioStreamPlayer" parent="." unique_id=56758449]
 stream = ExtResource("6_jsrd8")
+volume_db = -10.0
 autoplay = true
 
 [connection signal="pressed" from="VBoxContainer/Start Button" to="." method="_on_start_button_pressed"]
