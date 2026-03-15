@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cfibmteine06g" path="res://Assets/Sprites/Play (Pressed).png" id="3_jsrd8"]
 [ext_resource type="Texture2D" uid="uid://bl5veqi70gy4j" path="res://Assets/Sprites/Quit.png" id="4_wbdvm"]
 [ext_resource type="Texture2D" uid="uid://cl7olcne8whvc" path="res://Assets/Sprites/Quit (Pressed).png" id="5_q3rjx"]
+[ext_resource type="AudioStream" uid="uid://b13h03p4r6loj" path="res://Assets/Music/Title.wav" id="6_jsrd8"]
 
 [sub_resource type="SystemFont" id="SystemFont_wwsa2"]
 font_names = PackedStringArray("Comic Sans MS")
@@ -106,6 +107,11 @@ initial_position = 1
 size = Vector2i(500, 100)
 ok_button_text = "Exit Game"
 
+[node name="Title Music" type="AudioStreamPlayer" parent="." unique_id=56758449]
+stream = ExtResource("6_jsrd8")
+autoplay = true
+
 [connection signal="pressed" from="VBoxContainer/Start Button" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Quit Button" to="." method="_on_quit_button_pressed"]
 [connection signal="confirmed" from="ConfirmationDialog" to="." method="_on_confirmation_dialog_confirmed"]
+[connection signal="finished" from="Title Music" to="." method="_on_title_music_finished"]

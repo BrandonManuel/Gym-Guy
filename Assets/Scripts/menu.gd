@@ -3,12 +3,15 @@ extends Control
 @onready var confirmation_dialog: ConfirmationDialog = $ConfirmationDialog
 @onready var start_button: TextureButton = $"VBoxContainer/Start Button"
 @onready var quit_button: TextureButton = $"VBoxContainer/Quit Button"
+@onready var title_music: AudioStreamPlayer = $"Title Music"
 
 const LABEL_NORMAL_Y = -8.0
 const LABEL_PRESSED_Y = -3.0
 
 var start_pressed: bool = false
 var exit_pressed: bool = false
+
+var times_played = 0
 
 func _ready():
 	start_button.button_down.connect(_on_start_button_down)
@@ -61,3 +64,9 @@ func _on_quit_button_pressed() -> void:
 
 func _on_confirmation_dialog_confirmed():
 	get_tree().quit()
+
+
+func _on_title_music_finished() -> void:
+	times_played += 1
+	if times_played < 2:
+		title_music.play(0)
