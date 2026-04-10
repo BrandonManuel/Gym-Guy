@@ -67,6 +67,7 @@ script = SubResource("GDScript_wowpa")
 position = Vector2(-23, -49)
 
 [node name="Gym Floor Music" type="AudioStreamPlayer" parent="." unique_id=1208682248]
+process_mode = 3
 stream = ExtResource("5_wowpa")
 volume_db = -25.0
 autoplay = true

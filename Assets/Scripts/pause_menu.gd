@@ -17,9 +17,11 @@ var no_pressed: bool = false
 var times_played = 0
 
 func pause_or_resume():
-	if !self.visible:
+	if !self.visible: # if not paused
+		AudioServer.set_bus_effect_enabled(AudioServer.get_bus_index("Master"), 0, true)  # pause
 		get_tree().paused = true
 	else:
+		AudioServer.set_bus_effect_enabled(AudioServer.get_bus_index("Master"), 0, false) # resume
 		get_tree().paused = false
 		
 	self.visible = !self.visible
