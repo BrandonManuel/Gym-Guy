@@ -1,23 +1,22 @@
-[gd_scene format=3 uid="uid://b8b6u354gk5fn"]
+[gd_scene format=3 uid="uid://d1t86l406grw4"]
 
-[ext_resource type="Script" uid="uid://cxxd8dqlhjwyi" path="res://Assets/Scripts/menu.gd" id="1_1rerr"]
-[ext_resource type="Texture2D" uid="uid://cj8adop763j82" path="res://Assets/Sprites/Play.png" id="2_wwsa2"]
-[ext_resource type="Texture2D" uid="uid://cfibmteine06g" path="res://Assets/Sprites/Play (Pressed).png" id="3_jsrd8"]
-[ext_resource type="Texture2D" uid="uid://bl5veqi70gy4j" path="res://Assets/Sprites/Quit.png" id="4_wbdvm"]
-[ext_resource type="Texture2D" uid="uid://cl7olcne8whvc" path="res://Assets/Sprites/Quit (Pressed).png" id="5_q3rjx"]
-[ext_resource type="AudioStream" uid="uid://b13h03p4r6loj" path="res://Assets/Music/Title.wav" id="6_jsrd8"]
+[ext_resource type="Script" uid="uid://dw2chfavfv0g7" path="res://Assets/Scripts/pause_menu.gd" id="1_edgu1"]
+[ext_resource type="Texture2D" uid="uid://cj8adop763j82" path="res://Assets/Sprites/Play.png" id="2_spa0u"]
+[ext_resource type="Texture2D" uid="uid://cfibmteine06g" path="res://Assets/Sprites/Play (Pressed).png" id="3_8gcme"]
+[ext_resource type="Texture2D" uid="uid://bl5veqi70gy4j" path="res://Assets/Sprites/Quit.png" id="4_bphpk"]
+[ext_resource type="Texture2D" uid="uid://cl7olcne8whvc" path="res://Assets/Sprites/Quit (Pressed).png" id="5_bt423"]
 
 [sub_resource type="SystemFont" id="SystemFont_wwsa2"]
 font_names = PackedStringArray("Comic Sans MS")
 
-[node name="Menu" type="Control" unique_id=1534397602]
+[node name="PauseMenu" type="Control" unique_id=1534397602]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_1rerr")
+script = ExtResource("1_edgu1")
 
 [node name="Background" type="ColorRect" parent="." unique_id=1431914866]
 layout_mode = 1
@@ -27,7 +26,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.07137618, 0.38091406, 0.5472506, 1)
+color = Color(0.07058824, 0.38039216, 0.54901963, 0)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=681458777]
 layout_mode = 1
@@ -41,26 +40,26 @@ size_flags_vertical = 3
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="Title" type="Label" parent="VBoxContainer" unique_id=1672266738]
+[node name="Pause" type="Label" parent="VBoxContainer" unique_id=1672266738]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = SubResource("SystemFont_wwsa2")
 theme_override_font_sizes/font_size = 25
-text = "Guy who is in a gym"
+text = "Paused"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="Start Button" type="TextureButton" parent="VBoxContainer" unique_id=1791325488]
+[node name="Resume Button" type="TextureButton" parent="VBoxContainer" unique_id=1791325488]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 10
-texture_normal = ExtResource("2_wwsa2")
-texture_pressed = ExtResource("3_jsrd8")
+texture_normal = ExtResource("2_spa0u")
+texture_pressed = ExtResource("3_8gcme")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/Start Button" unique_id=469575428]
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/Resume Button" unique_id=469575428]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -70,7 +69,7 @@ offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-text = "Start"
+text = "Resume"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -79,8 +78,8 @@ custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 2
-texture_normal = ExtResource("4_wbdvm")
-texture_pressed = ExtResource("5_q3rjx")
+texture_normal = ExtResource("4_bphpk")
+texture_pressed = ExtResource("5_bt423")
 ignore_texture_size = true
 stretch_mode = 5
 
@@ -96,14 +95,10 @@ offset_bottom = -7.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-text = "Exit"
+theme_override_font_sizes/normal_font_size = 11
+text = "Exit to Menu"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="Title Music" type="AudioStreamPlayer" parent="." unique_id=56758449]
-stream = ExtResource("6_jsrd8")
-volume_db = -25.0
-autoplay = true
 
 [node name="ConfirmQuit" type="Panel" parent="." unique_id=1898170940]
 layout_mode = 1
@@ -130,7 +125,7 @@ layout_mode = 2
 size_flags_vertical = 10
 theme_override_fonts/font = SubResource("SystemFont_wwsa2")
 theme_override_font_sizes/font_size = 25
-text = "Are you sure you want to exit?"
+text = "Are you sure you want to exit to menu?"
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ConfirmQuit/VBoxContainer" unique_id=468010303]
@@ -143,8 +138,8 @@ custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 10
-texture_normal = ExtResource("2_wwsa2")
-texture_pressed = ExtResource("3_jsrd8")
+texture_normal = ExtResource("2_spa0u")
+texture_pressed = ExtResource("3_8gcme")
 ignore_texture_size = true
 stretch_mode = 5
 
@@ -167,8 +162,8 @@ custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 2
-texture_normal = ExtResource("4_wbdvm")
-texture_pressed = ExtResource("5_q3rjx")
+texture_normal = ExtResource("4_bphpk")
+texture_pressed = ExtResource("5_bt423")
 ignore_texture_size = true
 stretch_mode = 5
 
@@ -188,17 +183,16 @@ text = "No"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="button_down" from="VBoxContainer/Start Button" to="." method="_on_start_button_button_down"]
-[connection signal="button_up" from="VBoxContainer/Start Button" to="." method="_on_start_button_button_up"]
-[connection signal="mouse_entered" from="VBoxContainer/Start Button" to="." method="_on_start_button_mouse_entered"]
-[connection signal="mouse_exited" from="VBoxContainer/Start Button" to="." method="_on_start_button_mouse_exited"]
-[connection signal="pressed" from="VBoxContainer/Start Button" to="." method="_on_start_button_pressed"]
+[connection signal="button_down" from="VBoxContainer/Resume Button" to="." method="_on_start_button_button_down"]
+[connection signal="button_up" from="VBoxContainer/Resume Button" to="." method="_on_start_button_button_up"]
+[connection signal="mouse_entered" from="VBoxContainer/Resume Button" to="." method="_on_start_button_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/Resume Button" to="." method="_on_start_button_mouse_exited"]
+[connection signal="pressed" from="VBoxContainer/Resume Button" to="." method="_on_start_button_pressed"]
 [connection signal="button_down" from="VBoxContainer/Quit Button" to="." method="_on_quit_button_button_down"]
 [connection signal="button_up" from="VBoxContainer/Quit Button" to="." method="_on_quit_button_button_up"]
 [connection signal="mouse_entered" from="VBoxContainer/Quit Button" to="." method="_on_quit_button_mouse_entered"]
 [connection signal="mouse_exited" from="VBoxContainer/Quit Button" to="." method="_on_quit_button_mouse_exited"]
 [connection signal="pressed" from="VBoxContainer/Quit Button" to="." method="_on_quit_button_pressed"]
-[connection signal="finished" from="Title Music" to="." method="_on_title_music_finished"]
 [connection signal="button_down" from="ConfirmQuit/VBoxContainer/HBoxContainer/Yes Button" to="." method="_on_yes_button_button_down"]
 [connection signal="button_up" from="ConfirmQuit/VBoxContainer/HBoxContainer/Yes Button" to="." method="_on_yes_button_button_up"]
 [connection signal="mouse_entered" from="ConfirmQuit/VBoxContainer/HBoxContainer/Yes Button" to="." method="_on_yes_button_mouse_entered"]
