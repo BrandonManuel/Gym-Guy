@@ -3,6 +3,7 @@ extends CanvasGroup
 @onready var gym_floor: TileMapLayer = $"../Gym Floor"
 @onready var player: CharacterBody2D = $"../Player"
 @onready var player_sprite: Sprite2D = $"../Player/Visual/Sprite2D"
+@onready var arrow: AnimatedSprite2D = $"../Gym Floor/WorkoutZone/AnimatedSprite2D"
 
 # Mirror location
 var mirror_grid_pos = Vector2i(0, -4)
@@ -124,9 +125,10 @@ func _on_player_picked_up_item(item: Node) -> void:
 		var reflection_hand = player_reflection.get_node("Hand")
 		reflection_hand.add_child(item_reflection)
 		item_reflection.transform = Transform2D.IDENTITY
-		
+				
 func _on_player_held_item_z_changed(z: int) -> void:
 	var reflection_hand = player_reflection.get_node("Hand")
 	if reflection_hand and reflection_hand.get_child_count() > 0:
 		reflection_hand.get_child(0).z_index = -z
 		reflection_hand.get_child(0).z_as_relative = true
+	

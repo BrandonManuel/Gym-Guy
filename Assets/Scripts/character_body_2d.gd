@@ -4,6 +4,9 @@ extends CharacterBody2D
 @onready var inventory: Node = $Inventory
 @onready var sprite: Sprite2D = $Visual/Sprite2D
 @onready var hand: Marker2D = $Visual/Sprite2D/Hand
+@onready var arrow: AnimatedSprite2D = $"../Gym Floor/WorkoutZone/AnimatedSprite2D"
+@onready var arrow_collision: CollisionShape2D = $"../Gym Floor/WorkoutZone/CollisionShape2D"
+@onready var workout_zone: CollisionShape2D = $"../Gym Floor/WorkoutZone/CollisionShape2D"
 
 const SPEED = 60.0
 
@@ -18,6 +21,7 @@ var direction = facing.DOWN
 
 var nearby_item: Node2D = null
 var held_item: Node2D = null
+var frozen: bool = false
 
 func _process(delta: float) -> void:
 	if nearby_item != null and Input.is_action_just_pressed("interact"):
@@ -29,6 +33,9 @@ func _process(delta: float) -> void:
 		hand.add_child(item)
 		item.transform = Transform2D.IDENTITY
 		held_item = item
+		arrow_collision.disabled = false
+		arrow.visible = true
+		
 
 
 func _physics_process(delta: float) -> void:
@@ -42,6 +49,9 @@ func _physics_process(delta: float) -> void:
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
+	if frozen:
+		return
+	
 	var input_direction := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	var animation = "idle"
 	
@@ -103,3 +113,16 @@ func _physics_process(delta: float) -> void:
 			hand.position.x = pos.x
 		hand.position.y = pos.y
 		hand.rotation_degrees = rotation
+
+func disable_collision():
+	arrow_collision.disabled = true
+
+func _on_workout_zone_body_entered(body: Node2D) -> void:
+	call_deferred('disable_collision')
+	arrow.visible = false
+	global_position = workout_zone.global_position
+	frozen = true
+	direction = facing.UP
+	animation_player.play('curling')
+	velocity.x = 0
+	velocity.y = 0

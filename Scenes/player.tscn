@@ -24,6 +24,20 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0)
 }
 
+[sub_resource type="Animation" id="Animation_tx1dd"]
+resource_name = "curling"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 2, 2, 2),
+"points": PackedFloat32Array(24, -0.25, 0, 0.25, 0, 25, -0.033333335, -0.16666667, 0, 0, 26, -0.033333335, -0.16666667, 0, 0, 27, -0.03333334, -0.16666667, 0, 0, 26, -0.025000006, 0.16666667, 0, 0, 25, -0.024999997, -0.16666667, 0, 0, 24, -0.024999997, 0.16666667, 0, 0),
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9)
+}
+
 [sub_resource type="Animation" id="Animation_fkybt"]
 resource_name = "idle"
 length = 0.8
@@ -123,6 +137,7 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vgqql"]
 _data = {
 &"RESET": SubResource("Animation_vgqql"),
+&"curling": SubResource("Animation_tx1dd"),
 &"idle": SubResource("Animation_fkybt"),
 &"idle (back)": SubResource("Animation_x3wgy"),
 &"walk": SubResource("Animation_3smsa"),
@@ -163,7 +178,7 @@ z_index = 1
 texture_filter = 1
 texture = ExtResource("2_6t5aa")
 hframes = 4
-vframes = 6
+vframes = 7
 
 [node name="Hand" type="Marker2D" parent="Visual/Sprite2D" unique_id=980069678]
 position = Vector2(0, 4)

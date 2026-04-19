@@ -15,6 +15,10 @@ run/main_scene="uid://b8b6u354gk5fn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://6vc3kkrtql5g"
+
 [autoload]
 
 Util="*uid://c2kugt1s6e1a4"
@@ -67,3 +71,4 @@ interact={
 
 textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)
