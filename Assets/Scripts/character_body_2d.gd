@@ -13,6 +13,7 @@ const SPEED = 60.0
 enum facing { UP, DOWN }
 
 signal is_walking
+signal is_lifting
 signal picked_up_item
 signal dropped_item
 signal held_item_z_changed(z: int)
@@ -21,6 +22,7 @@ var direction = facing.DOWN
 
 var nearby_item: Node2D = null
 var held_item: Node2D = null
+var animation: String
 var frozen: bool = false
 
 func _process(delta: float) -> void:
@@ -35,7 +37,6 @@ func _process(delta: float) -> void:
 		held_item = item
 		arrow_collision.disabled = false
 		arrow.visible = true
-		
 
 
 func _physics_process(delta: float) -> void:
@@ -48,14 +49,14 @@ func _physics_process(delta: float) -> void:
 		#velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	if frozen:
-		return
+	# As good practice, you should replace UI actions with custom gameplay actions.dw
 	
 	var input_direction := Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	var animation = "idle"
+		
+	if !frozen:
+		animation = "idle"
 	
-	if input_direction != Vector2.ZERO:
+	if !frozen and input_direction != Vector2.ZERO:
 		velocity = input_direction * SPEED
 		if input_direction.y > 0:
 			animation = "walk"
@@ -72,7 +73,7 @@ func _physics_process(delta: float) -> void:
 		if input_direction.x != 0:
 			sprite.flip_h = input_direction.x > 0
 
-	else:
+	elif !frozen:
 		velocity.x = 0
 		velocity.y = 0
 		animation = ""
@@ -80,10 +81,15 @@ func _physics_process(delta: float) -> void:
 			animation = "idle (back)"
 		else:
 			animation = "idle"
+		
+			
+	if frozen:
+		sprite.flip_h = false
 	
-	animation_player.play(animation)
-	is_walking.emit(animation)
-	move_and_slide()
+	if animation != 'curling':
+		if animation_player.current_animation != animation:
+			animation_player.play(animation)
+			is_walking.emit(animation)
 
 	if held_item:
 		var frame = sprite.frame % 4
@@ -96,6 +102,10 @@ func _physics_process(delta: float) -> void:
 			else:
 				held_item.z_index = -1
 				held_item_z_changed.emit(-1)
+			held_item.z_as_relative = true
+		elif animation.contains('curling'):
+			held_item.z_index = -1
+			held_item_z_changed.emit(-1)
 			held_item.z_as_relative = true
 		else:
 			if animation == 'walk' and frame == 3:
@@ -114,6 +124,8 @@ func _physics_process(delta: float) -> void:
 		hand.position.y = pos.y
 		hand.rotation_degrees = rotation
 
+	move_and_slide()
+
 func disable_collision():
 	arrow_collision.disabled = true
 
@@ -123,6 +135,21 @@ func _on_workout_zone_body_entered(body: Node2D) -> void:
 	global_position = workout_zone.global_position
 	frozen = true
 	direction = facing.UP
-	animation_player.play('curling')
 	velocity.x = 0
 	velocity.y = 0
+	
+#	TODO remove these calls to lift() and start working on actual minigame logic for these calls (also remove await which was just here for testing)
+	lift()
+	await get_tree().create_timer(2.0).timeout
+	lift()
+	
+func lift():
+	animation = 'curling'
+	print('setting animation to curling')
+	animation_player.play('curling')
+	is_lifting.emit('curling')
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == 'curling':
+		animation = 'idle (back)'

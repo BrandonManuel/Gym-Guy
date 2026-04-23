@@ -17,6 +17,8 @@ var current_animation = ''
 
 var reflections: Dictionary[Node, Node] = {}
 
+var arrow_reflection: Node
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var tile_size = gym_floor.tile_set.tile_size.y
@@ -26,7 +28,15 @@ func _ready() -> void:
 		reflect(object)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(delta: float) -> void:		
+	if arrow.visible and arrow_reflection == null:
+		arrow_reflection = reflect(arrow)
+	elif !arrow.visible and arrow_reflection != null:
+		reflections[arrow].queue_free()
+		arrow_reflection = null
+		
+	
+	
 	if player_reflection is Sprite2D:
 		update_reflection_pos(player_sprite, player_reflection)
 		player_reflection.flip_h = player_sprite.flip_h
@@ -60,17 +70,18 @@ func _process(delta: float) -> void:
 			reflection_hand.z_as_relative = true
 			
 		
-func reflect(object: Node):
+func reflect(object: Node) -> Node:
+	var reflection: Node
 	if object.name != 'Player' and 'reflections' in object.get_groups():
 		if object is Node2D:
-			var reflection = object.duplicate()
+			reflection = object.duplicate()
 			add_child(reflection)
 			update_reflection_pos(object, reflection)
 			reflections[object] = reflection
 			reflection.set_meta("source", object)
 	elif object.name == 'Player':		
 		var visual: Node2D = object.get_node('Visual')
-		var reflection = visual.duplicate()
+		reflection = visual.duplicate()
 		
 		var sprite: Sprite2D = reflection.get_node('Sprite2D')
 		player_animation_player = reflection.get_node('AnimationPlayer')
@@ -81,6 +92,8 @@ func reflect(object: Node):
 		update_reflection_pos(player_sprite, player_reflection)
 		reflections[object] = reflection
 		reflection.set_meta("source", object)
+	
+	return reflection
 
 func update_reflection_pos(source: Node2D, reflection: Node2D):
 	var source_y = source.global_position.y
@@ -98,6 +111,7 @@ func update_reflection_pos(source: Node2D, reflection: Node2D):
 		reflection.z_as_relative = false
 
 func _on_player_is_walking(walking_animation: String) -> void:
+	print('is walking')
 	if player_animation_player == null:
 		return
 	
@@ -115,6 +129,14 @@ func _on_player_is_walking(walking_animation: String) -> void:
 				player_animation_player.play(animation[0] + ' (back reflection)')
 		current_animation = walking_animation
 
+func _on_player_is_lifting(curling_animation: String) -> void:
+	if player_animation_player == null:
+		return
+	
+	if current_animation != curling_animation and curling_animation is String:
+		var animation = curling_animation.split(' ')
+		player_animation_player.play(animation[0] + ' (reflection)')
+		current_animation = curling_animation
 
 func _on_player_picked_up_item(item: Node) -> void:
 	var item_reflection = reflections.get(item)

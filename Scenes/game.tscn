@@ -166,6 +166,7 @@ process_mode = 3
 visible = false
 
 [connection signal="held_item_z_changed" from="Player" to="Mirror World" method="_on_player_held_item_z_changed"]
+[connection signal="is_lifting" from="Player" to="Mirror World" method="_on_player_is_lifting"]
 [connection signal="is_walking" from="Player" to="Mirror World" method="_on_player_is_walking"]
 [connection signal="picked_up_item" from="Player" to="Mirror World" method="_on_player_picked_up_item"]
 [connection signal="body_entered" from="Gym Floor/WorkoutZone" to="Player" method="_on_workout_zone_body_entered"]

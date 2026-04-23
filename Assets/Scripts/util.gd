@@ -5,6 +5,7 @@ const HAND_OFFSETS = {
 	"walk (back)": [Vector2(-4, 6), Vector2(1, 4), Vector2(-4, 6), Vector2(0, 4)],
 	"idle": [Vector2(4, 6), Vector2(4, 5), Vector2(4, 5), Vector2(4, 6)],
 	"idle (back)": [Vector2(-4, 6), Vector2(-4, 5), Vector2(-4, 5), Vector2(-4, 6)],
+	"curling": [Vector2(-4, 6), Vector2(-4, 5), Vector2(-3, 4), Vector2(-3, 3), Vector2(-3, 4), Vector2(-4, 5), Vector2(-4, 6)],
 }
 
 const HAND_OFFSETS_REFLECTIONS = {
@@ -12,6 +13,8 @@ const HAND_OFFSETS_REFLECTIONS = {
 	"walk (back reflection)": [Vector2(4, 6), Vector2(-1, 4), Vector2(4, 6), Vector2(3, 4)],
 	"idle": [Vector2(-4, 6), Vector2(-4, 5), Vector2(-4, 5), Vector2(-4, 6)],
 	"idle (back)": [Vector2(4, 6), Vector2(4, 5), Vector2(4, 5), Vector2(4, 6)],
+	"curling": [Vector2(-4, 6), Vector2(-4, 5), Vector2(-4, 5), Vector2(-4, 6)],
+	"curling (reflection)": [Vector2(-4, 6), Vector2(-4, 5), Vector2(-3, 4), Vector2(-3, 3), Vector2(-3, 4), Vector2(-4, 5), Vector2(-4, 6)],
 }
 
 const HAND_ROTATIONS = {
@@ -19,6 +22,8 @@ const HAND_ROTATIONS = {
 	"walk (back)": [0, 90, 0, 90],
 	"idle": [0, 0, 0, 0],
 	"idle (back)": [0, 0, 0, 0],
+	"curling": [0, 0, 0, 0],
+	"curling (reflection)": [0, 0, 0, 0],
 }
 
 const HAND_ROTATIONS_REFLECTIONS = {
@@ -26,6 +31,8 @@ const HAND_ROTATIONS_REFLECTIONS = {
 	"walk (back reflection)": [0, 90, 0, 90],
 	"idle": [0, 0, 0, 0],
 	"idle (back)": [0, 0, 0, 0],
+	"curling": [0, 0, 0, 0],
+	"curling (reflection)": [0, 0, 0, 0],
 }
 
 const HAND_POS = Vector2(4, 6)
