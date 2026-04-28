@@ -86,7 +86,7 @@ func _physics_process(delta: float) -> void:
 	if frozen:
 		sprite.flip_h = false
 	
-	if animation != 'curling':
+	if !frozen and animation != 'curling':
 		if animation_player.current_animation != animation:
 			animation_player.play(animation)
 			is_walking.emit(animation)
@@ -138,24 +138,12 @@ func _on_workout_zone_body_entered(body: Node2D) -> void:
 	velocity.x = 0
 	velocity.y = 0
 	
-#	TODO remove these calls to lift() and start working on actual minigame logic for these calls (also remove await which was just here for testing)
-	lift()
-	await get_tree().create_timer(2.0).timeout
-	lift()
-	await get_tree().create_timer(2.0).timeout
-	lift()
-	await get_tree().create_timer(2.0).timeout
-	lift()
-	await get_tree().create_timer(2.0).timeout
-	lift()
-	
-func lift():
+	Game.start(self)
 	animation = 'curling'
-	print('setting animation to curling')
-	animation_player.play('curling')
-	is_lifting.emit('curling')
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == 'curling':
 		animation = 'idle (back)'
+		animation_player.play(animation)
+		is_walking.emit(animation)

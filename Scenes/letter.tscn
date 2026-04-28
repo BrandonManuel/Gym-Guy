@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://0xsjvhrdy7nr"]
+
+[ext_resource type="Texture2D" uid="uid://ftw1c2mkdinj" path="res://Assets/Sprites/Alphabet.png" id="1_ka838"]
+
+[node name="Letter" type="TextureRect" unique_id=919897395]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1168921789]
+texture = ExtResource("1_ka838")
+vframes = 26

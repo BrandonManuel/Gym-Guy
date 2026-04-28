@@ -22,6 +22,7 @@ buses/default_bus_layout="uid://6vc3kkrtql5g"
 [autoload]
 
 Util="*uid://c2kugt1s6e1a4"
+Game="*uid://lsdrkm624vw0"
 
 [dotnet]
 
