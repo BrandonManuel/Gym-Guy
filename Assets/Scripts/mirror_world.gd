@@ -34,8 +34,6 @@ func _process(delta: float) -> void:
 	elif !arrow.visible and arrow_reflection != null:
 		reflections[arrow].queue_free()
 		arrow_reflection = null
-		
-	
 	
 	if player_reflection is Sprite2D:
 		update_reflection_pos(player_sprite, player_reflection)
@@ -69,6 +67,9 @@ func _process(delta: float) -> void:
 			reflection_hand.z_index = hand.z_index * -1
 			reflection_hand.z_as_relative = true
 			
+	if arrow_reflection != null:
+		arrow_reflection.pause()
+		arrow_reflection.set_frame_and_progress(arrow.frame, arrow.frame_progress)
 		
 func reflect(object: Node) -> Node:
 	var reflection: Node

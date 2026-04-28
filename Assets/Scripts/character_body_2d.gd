@@ -142,6 +142,12 @@ func _on_workout_zone_body_entered(body: Node2D) -> void:
 	lift()
 	await get_tree().create_timer(2.0).timeout
 	lift()
+	await get_tree().create_timer(2.0).timeout
+	lift()
+	await get_tree().create_timer(2.0).timeout
+	lift()
+	await get_tree().create_timer(2.0).timeout
+	lift()
 	
 func lift():
 	animation = 'curling'
