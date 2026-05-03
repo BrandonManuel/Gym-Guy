@@ -100,8 +100,7 @@ func _physics_process(delta: float) -> void:
 				held_item.z_index = 1
 				held_item_z_changed.emit(1)
 			else:
-				held_item.z_index = -1
-				held_item_z_changed.emit(-1)
+				play_idle_back()
 			held_item.z_as_relative = true
 		elif animation.contains('curling'):
 			held_item.z_index = -1
@@ -126,6 +125,22 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
+func play_idle_back():
+	var frame = sprite.frame % 4
+	var offsets = Util.HAND_OFFSETS.get(animation, [Util.HAND_POS])
+	var rotations = Util.HAND_ROTATIONS.get(animation, [0])
+	held_item.z_index = -1
+	held_item_z_changed.emit(-1)
+	held_item.z_as_relative = true
+	var pos = offsets[min(frame, offsets.size() - 1)]
+	var rotation = rotations[min(frame, offsets.size() - 1)]
+	if sprite.flip_h:
+		hand.position.x = -pos.x + 1
+	else:
+		hand.position.x = pos.x
+	hand.position.y = pos.y
+	hand.rotation_degrees = rotation
+	
 func disable_collision():
 	arrow_collision.disabled = true
 
@@ -139,7 +154,7 @@ func _on_workout_zone_body_entered(body: Node2D) -> void:
 	velocity.y = 0
 	
 	Game.start(self)
-	animation = 'curling'
+	animation = 'idle (back)'
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:

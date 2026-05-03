@@ -13,7 +13,7 @@ const HAND_OFFSETS_REFLECTIONS = {
 	"walk (back reflection)": [Vector2(4, 6), Vector2(-1, 4), Vector2(4, 6), Vector2(3, 4)],
 	"idle": [Vector2(-4, 6), Vector2(-4, 5), Vector2(-4, 5), Vector2(-4, 6)],
 	"idle (back)": [Vector2(4, 6), Vector2(4, 5), Vector2(4, 5), Vector2(4, 6)],
-	"curling": [Vector2(-4, 6), Vector2(-4, 5), Vector2(-4, 5), Vector2(-4, 6)],
+	"curling": [Vector2(-4, 6), Vector2(-4, 5), Vector2(-3, 4), Vector2(-3, 3), Vector2(-3, 4), Vector2(-4, 5), Vector2(-4, 6)],
 	"curling (reflection)": [Vector2(-4, 6), Vector2(-4, 5), Vector2(-3, 4), Vector2(-3, 3), Vector2(-3, 4), Vector2(-4, 5), Vector2(-4, 6)],
 }
 
@@ -36,3 +36,5 @@ const HAND_ROTATIONS_REFLECTIONS = {
 }
 
 const HAND_POS = Vector2(4, 6)
+
+const LETTERS = ["Z", "Y", "X", "W", "V", "U", "T", "S", "R", "Q", "P", "O", "N", "M", "L", "K", "J", "I", "H", "G", "F", "E", "D", "C", "B", "A"]

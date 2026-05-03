@@ -136,7 +136,8 @@ func _on_player_is_lifting(curling_animation: String) -> void:
 	
 	if current_animation != curling_animation and curling_animation is String:
 		var animation = curling_animation.split(' ')
-		player_animation_player.play(animation[0] + ' (reflection)')
+		var lift_animation = animation[0] + ' (reflection)'
+		player_animation_player.play(lift_animation)
 		current_animation = curling_animation
 
 func _on_player_picked_up_item(item: Node) -> void:

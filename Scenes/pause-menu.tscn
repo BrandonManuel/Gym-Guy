@@ -8,6 +8,7 @@
 
 [sub_resource type="SystemFont" id="SystemFont_wwsa2"]
 font_names = PackedStringArray("Comic Sans MS")
+subpixel_positioning = 0
 
 [node name="PauseMenu" type="Control" unique_id=1534397602]
 layout_mode = 3
