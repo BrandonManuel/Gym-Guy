@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://0xsjvhrdy7nr"]
 
-[ext_resource type="Texture2D" uid="uid://ftw1c2mkdinj" path="res://Assets/Sprites/Alphabet.png" id="1_ka838"]
+[ext_resource type="Texture2D" uid="uid://cwdmkdi5vu0wu" path="res://Assets/Sprites/Letters sprite sheet.png" id="1_ka838"]
 
 [node name="Letter" type="TextureRect" unique_id=919897395]
 

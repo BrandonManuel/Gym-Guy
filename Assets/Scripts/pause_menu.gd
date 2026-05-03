@@ -1,5 +1,6 @@
 extends Control
 
+@onready var game: Node2D = $"../.."
 @onready var resume_button: TextureButton = $"VBoxContainer/Resume Button"
 @onready var quit_button: TextureButton = $"VBoxContainer/Quit Button"
 @onready var confirm_quit: Panel = $ConfirmQuit
@@ -77,6 +78,12 @@ func _on_start_button_pressed() -> void:
 
 func _on_yes_button_pressed() -> void:
 	pause_or_resume()
+	game.roundStarted = false
+	game.currentIndex = 0
+	game.keysToPress = []
+	var score_menu = get_tree().get_root().find_child("ScoreMenu", true, false)
+	if score_menu != null:
+		score_menu.increment()
 	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
 
 func _on_no_button_pressed() -> void:

@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+@onready var game: Node2D = $".."
 @onready var animation_player: AnimationPlayer = $Visual/AnimationPlayer
 @onready var inventory: Node = $Inventory
 @onready var sprite: Sprite2D = $Visual/Sprite2D
@@ -153,7 +154,7 @@ func _on_workout_zone_body_entered(body: Node2D) -> void:
 	velocity.x = 0
 	velocity.y = 0
 	
-	Game.start(self)
+	game.start()
 	animation = 'idle (back)'
 
 

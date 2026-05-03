@@ -37,4 +37,4 @@ const HAND_ROTATIONS_REFLECTIONS = {
 
 const HAND_POS = Vector2(4, 6)
 
-const LETTERS = ["Z", "Y", "X", "W", "V", "U", "T", "S", "R", "Q", "P", "O", "N", "M", "L", "K", "J", "I", "H", "G", "F", "E", "D", "C", "B", "A"]
+const LETTERS = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
