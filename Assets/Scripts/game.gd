@@ -42,28 +42,39 @@ func setupLetters():
 		score = score_menu.score
 		
 	var num_keys = 1
-	if score > 5:
+	if score >= 5:
 		num_keys = 2
 		
-	if score > 10: 
+	if score >= 10: 
 		num_keys = 3
 	
-	if score > 15:
+	if score >= 15:
 		num_keys = 4
 		
-	if score > 20:
+	if score >= 20:
 		num_keys = 5
 	
 		
 	for i in range(num_keys - keyboard_keys.get_child_count()):
 		var instance = letter.instantiate()
-		var sprite: Sprite2D = instance.get_node('Sprite2D')
-		sprite.frame = randi_range(0, 25)
-		var letterKey = Util.LETTERS[sprite.frame]
+		var not_pressed: Sprite2D = instance.get_node("Polygon2D").get_node('Not Pressed')
+		var pressed: Sprite2D = instance.get_node("Polygon2D").get_node('Pressed')
+		var frame = randi_range(0, 25)
+		not_pressed.frame = frame
+		pressed.frame = frame
+		var letterKey = Util.LETTERS[frame]
 		keysToPress.push_back(letterKey)
 		keyboard_keys.add_child(instance)
-				
-			
+	
+	set_current_outline(true)
+
+func set_current_outline(flag: bool):
+	var key = keyboard_keys.get_child(currentIndex)
+	key.enable_current(flag)
+	
+func set_correct_outline(flag: bool):
+	var key = keyboard_keys.get_child(currentIndex)
+	key.enable_correct(flag)
 	
 func _input(event: InputEvent) -> void:
 	if roundStarted and event is InputEventKey and event.is_pressed():
@@ -71,13 +82,25 @@ func _input(event: InputEvent) -> void:
 		if !keysToPress.is_empty():
 			var keyToPress = keysToPress[currentIndex]
 			if keyToPress == letter:
+				keyboard_keys.get_child(currentIndex).get_node("Polygon2D").get_node("Not Pressed").visible = false
+				keyboard_keys.get_child(currentIndex).get_node("Polygon2D").get_node("Pressed").visible = true
+	
+	if roundStarted and event is InputEventKey and event.is_released():
+		var letter = char(event.keycode)
+		if !keysToPress.is_empty():
+			var keyToPress = keysToPress[currentIndex]
+			if keyToPress == letter:
+				keyboard_keys.get_child(currentIndex).get_node("Polygon2D").get_node("Not Pressed").visible = true
+				keyboard_keys.get_child(currentIndex).get_node("Polygon2D").get_node("Pressed").visible = false
+				set_current_outline(false)
+				set_correct_outline(true)
 				currentIndex += 1
-				tween.pause()
-				if currentIndex >= keysToPress.size():
+				if currentIndex < keysToPress.size():
+					set_current_outline(true)
+				else:
 					roundStarted = false
+					tween.pause()
 					score_menu.increment()
-
-					
 					print('setting animation to curling')
 					player.get_node('Visual').get_node('AnimationPlayer').play('curling')
 					player.is_lifting.emit('curling')
@@ -87,9 +110,9 @@ func _input(event: InputEvent) -> void:
 						n.queue_free()
 						
 					keysToPress = []
+					currentIndex = 0
 					setupLetters()
 					
-					currentIndex = 0
 					progress_bar.value = 100
 					timer_value = 5.0
 					tween = create_tween()
