@@ -4,6 +4,13 @@ extends Node
 @onready var keyboard_keys: HBoxContainer = $"Game Area/Keyboard Keys"
 @onready var progress_bar: ProgressBar = $"Game Area/ProgressBar"
 
+@export var audio_list: Array[AudioStreamWAV]
+@onready var sound_effects: AudioStreamPlayer = $"Sound Effects"
+
+enum sfx {
+	CORRECT_LETTER, LIFT
+}
+
 var letter = preload("res://Scenes/letter.tscn")
 var score_menu = null 
 var currentIndex = 0
@@ -95,6 +102,8 @@ func _input(event: InputEvent) -> void:
 				set_current_outline(false)
 				set_correct_outline(true)
 				currentIndex += 1
+				sound_effects.stream = audio_list[sfx.CORRECT_LETTER]
+				sound_effects.play()
 				if currentIndex < keysToPress.size():
 					set_current_outline(true)
 				else:
@@ -104,6 +113,8 @@ func _input(event: InputEvent) -> void:
 					print('setting animation to curling')
 					player.get_node('Visual').get_node('AnimationPlayer').play('curling')
 					player.is_lifting.emit('curling')
+					sound_effects.stream = audio_list[sfx.LIFT]
+					sound_effects.play()
 					await get_tree().create_timer(1.4667).timeout
 					for n in keyboard_keys.get_children():
 						keyboard_keys.remove_child(n)
