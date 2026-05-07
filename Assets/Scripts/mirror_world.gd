@@ -40,7 +40,7 @@ func _process(delta: float) -> void:
 		player_reflection.flip_h = player_sprite.flip_h
 		
 		var reflection_hand: Marker2D = player_reflection.get_node("Hand")
-		if reflection_hand and reflection_hand.get_child_count() > 0:
+		if player_animation_player.is_playing() and reflection_hand.get_child_count() > 0:
 			var frame = player_sprite.frame % 4
 						
 			var anim = player_animation_player.current_animation
@@ -132,6 +132,10 @@ func _on_player_is_walking(walking_animation: String) -> void:
 
 func _on_player_is_lifting(curling_animation: String) -> void:
 	if player_animation_player == null:
+		return
+		
+	if curling_animation == 'STOP':
+		player_animation_player.pause()
 		return
 	
 	if current_animation != curling_animation and curling_animation is String:

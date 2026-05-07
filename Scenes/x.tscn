@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bhx6icr6mto"]
+
+[ext_resource type="Texture2D" uid="uid://bf4gcaub54caa" path="res://Assets/Sprites/x.png" id="1_6akpp"]
+
+[node name="X" type="Control" unique_id=2067108739]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=309269617]
+position = Vector2(8, 8)
+texture = ExtResource("1_6akpp")

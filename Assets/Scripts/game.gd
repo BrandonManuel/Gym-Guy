@@ -3,15 +3,23 @@ extends Node
 @onready var game_area: Node2D = $"Game Area"
 @onready var keyboard_keys: HBoxContainer = $"Game Area/Keyboard Keys"
 @onready var progress_bar: ProgressBar = $"Game Area/ProgressBar"
+@onready var game_text: Label = $"Game Area/GameText"
+@onready var x_container: HBoxContainer = $"Game Area/XContainer"
 
 @export var audio_list: Array[AudioStreamWAV]
 @onready var sound_effects: AudioStreamPlayer = $"Sound Effects"
 
+@onready var gym_floor_music: AudioStreamPlayer = $"Gym Floor Music"
+
 enum sfx {
-	CORRECT_LETTER, LIFT
+	CORRECT_LETTER, INCORRECT_LETTER, LIFT
 }
 
+const num_allowed_strikes = 3
+
 var letter = preload("res://Scenes/letter.tscn")
+var strike = preload("res://Scenes/x.tscn")
+var num_strikes = 0
 var score_menu = null 
 var currentIndex = 0
 var keysToPress = []
@@ -22,19 +30,28 @@ var tween: Tween = null
 func start():
 	player.get_node('Visual').get_node('AnimationPlayer').play('idle (back)')
 	player.is_walking.emit('idle (back)')
+	
+	currentIndex = 0
+	num_strikes = 0
+	
+	game_text.text = "Get Ready to Type!"
+	game_text.visible = true
+	await get_tree().create_timer(2.0).timeout
+	game_text.visible = false
+	
 	setupLetters()
 	keyboard_keys.visible = true
 	progress_bar.visible = true
 	progress_bar.value = 100
 	
-	await get_tree().create_timer(2.0).timeout
+	
 	tween = create_tween()
 	tween.tween_property(progress_bar, "value", 0, timer_value)
 	roundStarted = true
 	
 func _process(delta: float) -> void:
 	if roundStarted:
-		if progress_bar.value <= 0:
+		if progress_bar != null and progress_bar.value <= 0:
 			print("out of time idiot")
 
 func setupLetters():
@@ -131,4 +148,21 @@ func _input(event: InputEvent) -> void:
 					roundStarted = true
 					player.is_walking.emit('idle (back)')
 			else:
-				print("YOU LOSE")
+				num_strikes += 1
+				sound_effects.stream = audio_list[sfx.INCORRECT_LETTER]
+				sound_effects.play()
+				var strike_instance = strike.instantiate()
+				strike_instance.custom_minimum_size = Vector2(16, 16)
+				x_container.add_child(strike_instance)
+				if num_strikes >= num_allowed_strikes:
+					roundStarted = false
+					keyboard_keys.queue_free()
+					progress_bar.queue_free()
+					gym_floor_music.stop()
+					player.get_node('Visual').get_node('AnimationPlayer').pause()
+					player.is_lifting.emit('STOP')
+					await get_tree().create_timer(2.0).timeout
+					game_text.text = "You Lose!"
+					game_text.visible = true
+					await get_tree().create_timer(3.0).timeout
+					get_tree().change_scene_to_file("res://Scenes/menu.tscn")
