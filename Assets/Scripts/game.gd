@@ -27,7 +27,11 @@ var roundStarted = false
 var timer_value: float = 5.0
 var tween: Tween = null
 
+signal save_game
+signal load_game
+
 func start():
+	load_game.emit()
 	player.get_node('Visual').get_node('AnimationPlayer').play('idle (back)')
 	player.is_walking.emit('idle (back)')
 	
@@ -62,6 +66,7 @@ func setupLetters():
 	
 	var score = 0
 	if score_menu != null:
+		score_menu.init()
 		score_menu.visible = true
 		score = score_menu.score
 		
@@ -155,6 +160,7 @@ func _input(event: InputEvent) -> void:
 				strike_instance.custom_minimum_size = Vector2(16, 16)
 				x_container.add_child(strike_instance)
 				if num_strikes >= num_allowed_strikes:
+					save_game.emit()
 					roundStarted = false
 					keyboard_keys.queue_free()
 					progress_bar.queue_free()
