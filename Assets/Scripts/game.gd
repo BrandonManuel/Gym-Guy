@@ -56,7 +56,7 @@ func start():
 func _process(delta: float) -> void:
 	if roundStarted:
 		if progress_bar != null and progress_bar.value <= 0:
-			print("out of time idiot")
+			end_game()
 
 func setupLetters():
 	player.play_idle_back()
@@ -83,7 +83,6 @@ func setupLetters():
 	if score >= 20:
 		num_keys = 5
 	
-		
 	for i in range(num_keys - keyboard_keys.get_child_count()):
 		var instance = letter.instantiate()
 		var not_pressed: Sprite2D = instance.get_node("Polygon2D").get_node('Not Pressed')
@@ -96,6 +95,20 @@ func setupLetters():
 		keyboard_keys.add_child(instance)
 	
 	set_current_outline(true)
+
+func end_game():
+	save_game.emit()
+	roundStarted = false
+	keyboard_keys.queue_free()
+	progress_bar.queue_free()
+	gym_floor_music.stop()
+	player.get_node('Visual').get_node('AnimationPlayer').pause()
+	player.is_lifting.emit('STOP')
+	await get_tree().create_timer(2.0).timeout
+	game_text.text = "You Lose!"
+	game_text.visible = true
+	await get_tree().create_timer(3.0).timeout
+	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
 
 func set_current_outline(flag: bool):
 	var key = keyboard_keys.get_child(currentIndex)
@@ -132,7 +145,6 @@ func _input(event: InputEvent) -> void:
 					roundStarted = false
 					tween.pause()
 					score_menu.increment()
-					print('setting animation to curling')
 					player.get_node('Visual').get_node('AnimationPlayer').play('curling')
 					player.is_lifting.emit('curling')
 					sound_effects.stream = audio_list[sfx.LIFT]
@@ -160,15 +172,4 @@ func _input(event: InputEvent) -> void:
 				strike_instance.custom_minimum_size = Vector2(16, 16)
 				x_container.add_child(strike_instance)
 				if num_strikes >= num_allowed_strikes:
-					save_game.emit()
-					roundStarted = false
-					keyboard_keys.queue_free()
-					progress_bar.queue_free()
-					gym_floor_music.stop()
-					player.get_node('Visual').get_node('AnimationPlayer').pause()
-					player.is_lifting.emit('STOP')
-					await get_tree().create_timer(2.0).timeout
-					game_text.text = "You Lose!"
-					game_text.visible = true
-					await get_tree().create_timer(3.0).timeout
-					get_tree().change_scene_to_file("res://Scenes/menu.tscn")
+					end_game()

@@ -112,7 +112,6 @@ func update_reflection_pos(source: Node2D, reflection: Node2D):
 		reflection.z_as_relative = false
 
 func _on_player_is_walking(walking_animation: String) -> void:
-	print('is walking')
 	if player_animation_player == null:
 		return
 	

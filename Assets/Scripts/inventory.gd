@@ -11,4 +11,4 @@ func _process(delta: float) -> void:
 	pass
 
 func add_nearby_item(item: Node2D) -> void:
-	print('Picking up: ', item)
+	pass
